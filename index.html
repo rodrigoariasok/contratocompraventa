@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Compra-Venta</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .form-container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .form-group button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .form-group button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h1>Generador de Contrato</h1>
+    <form id="contractForm">
+        <div class="form-group">
+            <label for="contractType">Tipo de Contrato:</label>
+            <select id="contractType" name="contractType">
+                <option value="motovehiculo">CONTRATO DE COMPRA-VENTA DE MOTOVEHÍCULO</option>
+                <option value="vehiculo">CONTRATO DE COMPRA-VENTA DE VEHÍCULO</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="day">Día:</label>
+            <input type="number" id="day" name="day" min="1" max="31" required>
+        </div>
+        <div class="form-group">
+            <label for="price">Precio:</label>
+            <input type="text" id="price" name="price" required>
+        </div>
+        <div class="form-group">
+            <button type="button" onclick="generatePDF()">Generar PDF</button>
+        </div>
+    </form>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+    function generatePDF() {
+        const { jsPDF } = window.jspdf;
+
+        const contractType = document.getElementById('contractType').value;
+        const day = document.getElementById('day').value;
+        const price = document.getElementById('price').value;
+
+        const pdf = new jsPDF();
+        
+        pdf.setFontSize(12);
+        pdf.text('CONTRATO DE COMPRA-VENTA DE VEHÍCULO', 10, 10); // You can adjust this text based on contractType
+
+        pdf.text(`En la ciudad de Villa de Merlo, provincia de San Luis, a los ${day} días del mes de septiembre de 2024, entre Ruiz, Dalma Florencia, DNI 42.787.508 con domicilio en Ruta 1 s/n, Piedra Blanca Abajo, Merlo, San Luis, en adelante LA VENDEDORA, y Correa, Agustina Leandra, DNI 32.530.896 con domicilio en Ruta 5 s/n km 01, Santa Rosa del Conlara, San Luis, en adelante LA COMPRADORA, se conviene celebrar este "${contractType}", con compromiso de transferencia, sujeto a las siguientes condiciones:`, 10, 20);
+
+        // Add other contract details here
+
+        pdf.text(`SEGUNDA: PRECIO. La venta se efectúa por el precio de ${price} pesos de contado.`, 10, 60);
+        // Add more details as needed
+
+        pdf.save('Contrato_Compra_Venta.pdf');
+    }
+</script>
+
+</body>
+</html>
